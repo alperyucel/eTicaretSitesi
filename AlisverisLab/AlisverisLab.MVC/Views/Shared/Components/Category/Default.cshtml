@@ -1,0 +1,13 @@
+﻿@model List<CategoryDTO>
+
+<h2>Category</h2>
+<div class="panel-group category-products" id="accordian">
+	@for (int i = 0; i < Model.Count; i++)
+	{
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title"><a asp-controller="Product" asp-action="ProductByCategory" asp-route-id="@Model[i].Id">@Model[i].CategoryName</a></h4>
+			</div>
+		</div>
+	}
+</div><!--/category-products-->

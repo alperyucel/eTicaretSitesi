@@ -1,0 +1,23 @@
+﻿@model List<MenuDTO>
+
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        @for (var i = 0; i < Model.Count; i++)
+        {
+            <li class="nav-item">
+                <a asp-controller="@Model[i].ControllerName" asp-action="@Model[i].ActionName" asp-area="@Model[i].AreaName" class="nav-link">
+                    <i class="@Model[i].Icon"></i>
+                    <p>
+                        @Model[i].Title
+                        @if (Model[i].CreatedTime.Date == DateTime.Now.Date)
+                        {
+                            <span class="right badge badge-danger">New</span>
+                        }
+                    </p>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

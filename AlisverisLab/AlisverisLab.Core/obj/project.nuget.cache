@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "LbS1vOP3AkYTXjiDT2mCBAITcSFYl7WwSHdWIGifbnxOixxfGclGK+7TpuSI9pdxsaooxBQ69FnA0PYw3ws+Aw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Alper\\Desktop\\AlisverisLab\\AlisverisLab\\AlisverisLab.Core\\AlisverisLab.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alper\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Alper\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

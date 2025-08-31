@@ -1,0 +1,55 @@
+﻿@model RegisterModel
+<!-- Registration Form -->
+<div class="tab-pane fade" id="login-register-registration-form" role="tabpanel">
+    <form asp-controller="Account" asp-action="Register" method="post">
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="mb-4">
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                    <label for="login-register-reg-username" class="form-label"></label>
+                    <input asp-for="UserName" type="username" placeholder="Username" class="form-control" id="login-register-reg-username">                     
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="mb-4">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <label for="login-register-reg-email" class="form-label"></label>
+                    <input asp-for="Email" type="email" placeholder="Email" class="form-control" id="login-register-reg-email">                     
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="mb-4">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <label for="login-register-reg-password" class="form-label"></label>
+                    <input asp-for="Password" type="password" placeholder="Password" class="form-control" id="login-register-reg-password">                    
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="mb-4">
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <label for="login-register-reg-confirm-password" class="form-label"</label>
+                    <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password" class="form-control" id="login-register-reg-confirm-password" >                     
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="login-register-terms" >
+                    <label class="form-check-label" for="login-register-terms">
+                        I agree to the <a asp-controller="Home" asp-action="TermsOfService">Terms of Service</a> and <a asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

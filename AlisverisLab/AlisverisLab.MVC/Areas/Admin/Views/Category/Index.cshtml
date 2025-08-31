@@ -1,0 +1,328 @@
+﻿@model CategoryDTO
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Categories</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" asp-area="admin">Home</a></li>
+                    <li class="breadcrumb-item active">Categories v1</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">                
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#addModal">Add</button>
+                        <h3 style="display:inline;" class="card-title">DataTable with default features</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblCategories" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>                             
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="quickForm">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input asp-for="CategoryName" type="text" class="form-control" placeholder="Category Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Description</label>
+                            <input asp-for="CategoryDescription" type="text" class="form-control" placeholder="Category Description">
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSave" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="updateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="quickForm">
+                    <div class="card-body">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input asp-for="GCategoryName" type="text" class="form-control" placeholder="Category Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Description</label>
+                            <input asp-for="GCategoryDescription" type="text" class="form-control" placeholder="Category Description">
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnUpdate" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.print.min.js"></script>
+    <script>
+
+        $(function () {
+            $('#tblCategories').DataTable({
+                lengthMenu: [
+                    [5, 25, 50, -1],
+                    [5, 25, 50, 'All']
+                ],
+                dom: 'Bfrtip', // Butonlar ve diğer öğelerin sıralaması
+                buttons: [
+                    'copy',       // Kopyalama
+                    'excel',      // Excel'e dışa aktarma
+                    'pdf',        // PDF'ye dışa aktarma,
+                    'print',
+                    {
+                        extend: 'csv', // CSV'ye dışa aktarma
+                        text: 'CSV'     // Buton metni
+                    },
+                    'pageLength'
+                ],
+                ajax: {
+                    url: '/admin/Category/GetCategories'
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'categoryName' },
+                    { data: 'categoryDescription' },
+                    { data: 'id' },
+                    { data: 'id' }
+                ],
+                columnDefs: [
+                    {
+                        targets: 3,
+                        render: function (data, type, row, meta) {
+                            return `<a class="btn btn-warning btnUpdate" cid=${data}>Update</a>`
+                        }
+                    },
+                    {
+                        targets: 4,
+                        render: function (data, type, row, meta) {
+                            return `<a class="btn btn-danger btnDelete" cid=${data}>Delete</a>`
+                        }
+                    }
+                ],
+                pageLength: 5,
+                language: {
+                    //url: '//cdn.datatables.net/plug-ins/2.2.1/i18n/tr.json',
+                    url: '/adminassets/jsons/tr.json'
+                }
+
+
+            })
+        })
+
+        $('#btnSave').click(function () {
+
+
+            var category = {
+                categoryName: $('#CategoryName').val(),
+                categoryDescription: $('#CategoryDescription').val()
+            }
+
+            $.ajax({
+                url: '/admin/Category/AddCategory',
+                dataType: 'json',
+                method: 'POST',
+                data: { kategori: category },
+                success: function (data) {
+                    if (data.result) {
+
+                        var table = new DataTable('#tblCategories');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: data.message,
+                            icon: "success"
+                        }).then(() => {
+                            $('#addModal').modal('hide')
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            title: "İşlem Başarısız",
+                            text: data.message,
+                            icon: "error"
+                        });
+                    }
+                }
+            })
+        })
+
+        $('#tblCategories').on('click', '.btnUpdate', function () {
+            let categoryId = $(this).attr('cid');
+
+            $.ajax({
+                url: '/admin/Category/GetCategory',
+                dataType: 'json',
+                method: 'post',
+                data: { id: categoryId },
+                success: function (r) {
+                    if (r.result) {
+                        $('#GCategoryName').val(r.data.categoryName)
+                        $('#GCategoryDescription').val(r.data.categoryDescription)
+                        $('#Id').val(r.data.id)
+
+                        $('#updateModal').modal('show')
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+
+        })
+
+
+        $('#updateModal').on('click', '#btnUpdate', function () {
+
+            var category = {
+                Id: $('#Id').val(),
+                CategoryName: $('#GCategoryName').val(),
+                CategoryDescription: $('#GCategoryDescription').val()
+            }
+
+            $.ajax({
+                url: '/admin/Category/UpdateCategory',
+                dataType: 'json',
+                method: 'post',
+                data: { category: category },
+                success: function (data) {
+                    if (data.result) {
+
+                        var table = new DataTable('#tblCategories');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: data.message,
+                            icon: "success"
+                        }).then(() => {
+                            $('#updateModal').modal('hide')
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            title: "İşlem Başarısız",
+                            text: data.message,
+                            icon: "error"
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+
+
+        })
+
+
+
+        $('#tblCategories').on('click', '.btnDelete', function () {
+            let categoryId = $(this).attr('cid');
+
+            $.ajax({
+                url: '/admin/Category/DeleteCategory',
+                dataType: 'json',
+                method: 'post',
+                data: { id: categoryId },
+                success: function (r) {
+                    if (r.result) {
+                        var table = new DataTable('#tblCategories');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: r.message,
+                            icon: "success"
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+
+        })
+        
+    </script>
+}

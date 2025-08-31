@@ -1,0 +1,488 @@
+﻿@model ProductDTO
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Products</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" asp-area="admin">Home</a></li>
+                    <li class="breadcrumb-item active">Products</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">                       
+                        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#addModal">Add</button>
+                        <h3 style="display:inline;" class="card-title">DataTable with default features</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblProducts" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="quickForm">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input asp-for="ProductName" type="text" class="form-control" placeholder="Product Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Description</label>
+                            <input asp-for="ProductDescription" type="text" class="form-control" placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Price</label>
+                            <input asp-for="Price" type="number" min="0" class="form-control" placeholder="Price">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Stock</label>
+                            <input asp-for="Stock" type="number" min="0" class="form-control" placeholder="Stock">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Category</label>
+                            <select multiple class="custom-select form-control-border" asp-for="SelectedCategoryIds" asp-items="Model.Categories"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input accept="audio/*,video/*,image/*" type="file" multiple class="custom-file-input" id="productMedias">
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSave" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="updateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="quickForm">
+                    <div class="card-body">
+                        <input type="hidden" asp-for="GId" />
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input asp-for="GProductName" type="text" class="form-control" placeholder="Product Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Description</label>
+                            <input asp-for="GProductDescription" type="text" class="form-control" placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Price</label>
+                            <input asp-for="GPrice" type="number" min="0" class="form-control" placeholder="Price">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Stock</label>
+                            <input asp-for="GStock" type="number" min="0" class="form-control" placeholder="Stock">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Category</label>
+                            <select multiple class="custom-select form-control-border" asp-for="GSelectedCategoryIds" asp-items="Model.Categories">
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input accept="audio/*,video/*,image/*" type="file" multiple class="custom-file-input" id="gProductMedias">
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div id="images">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnUpdate" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.print.min.js"></script>
+    <script>
+
+
+
+        $(function () {
+            $('#tblProducts').DataTable({
+                lengthMenu: [
+                    [5, 25, 50, -1],
+                    [5, 25, 50, 'All']
+                ],
+                dom: 'Bfrtip', 
+                buttons: [
+                    'copy',       
+                    'excel',      
+                    'pdf',        
+                    'print',
+                    {
+                        extend: 'csv', 
+                        text: 'CSV'     
+                    },
+                    'pageLength'
+                ],
+                ajax: {
+                    url: '/admin/Product/GetProducts'
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'paths' },
+                    { data: 'productName' },
+                    { data: 'stock' },
+                    { data: 'price' },
+                    { data: 'id' },
+                    { data: 'id' }
+                ],
+                columnDefs: [
+                    {
+                        targets: 1,
+                        render: function (data, type, row, meta) {
+                            return `<img width="80" src='${data[0]}'>`
+                        }
+                    },
+                    {
+                        targets: 5,
+                        render: function (data, type, row, meta) {
+                            return `<a class="btn btn-warning btnUpdate" pid=${data}>Update</a>`
+                        }
+                    },
+                    {
+                        targets: 6,
+                        render: function (data, type, row, meta) {
+                            return `<a class="btn btn-danger btnDelete" pid=${data}>Delete</a>`
+                        }
+                    }
+                ],
+                pageLength: 5,
+                language: {
+                    //url: '//cdn.datatables.net/plug-ins/2.2.1/i18n/tr.json',
+                    url: '/adminassets/jsons/tr.json'
+                }
+
+
+            })
+        })
+
+        $('#btnSave').click(function () {
+
+
+            //var productDto = {
+            //productName: $('#ProductName').val(),
+            //productDescription: $('#ProductDescription').val(),
+            //price: $('#Price').val(),
+            //stock: $('#Stock').val(),
+            //selectedCategoryIds: $('#SelectedCategoryIds').val()
+            //}
+
+            let files = $('#productMedias')[0].files;
+
+            if (files.length == 0) {
+                alert("Lütfen en az bir dosya seçin!")
+                return;
+            }
+
+            let formData = new FormData();
+
+            //formData.append("productDto", productDto);
+
+            formData.append('productName', $('#ProductName').val());
+            formData.append('productDescription', $('#ProductDescription').val());
+            formData.append('price', $('#Price').val());
+            formData.append('stock', $('#Stock').val());
+
+            let categoryIds = $('#SelectedCategoryIds').val();
+
+            for (var i = 0; i < categoryIds.length; i++) {
+                formData.append("selectedCategoryIds", categoryIds[i])
+            }
+
+            for (var i = 0; i < files.length; i++) {
+                formData.append("files", files[i])
+            }
+
+            $.ajax({
+                url: '/admin/Product/AddProduct',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.result) {
+
+                        var table = new DataTable('#tblProducts');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: data.message,
+                            icon: "success"
+                        }).then(() => {
+                            $('#addModal').modal('hide')
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            title: "İşlem Başarısız",
+                            text: data.message,
+                            icon: "error"
+                        });
+                    }
+                }
+            })
+        })
+
+        $('#tblProducts').on('click', '.btnUpdate', function () {
+            let productId = $(this).attr('pid');
+
+            $.ajax({
+                url: '/admin/Product/GetProduct',
+                dataType: 'json',
+                method: 'post',
+                data: { id: productId },
+                success: function (r) {
+                    if (r.result) {
+
+                        $('#GProductName').val(r.data.productName)
+                        $('#GProductDescription').val(r.data.productDescription)
+                        $('#GPrice').val(r.data.price)
+                        $('#GStock').val(r.data.stock)
+
+                        $('#GId').val(r.data.id)
+
+
+                        var arr = [];
+
+                        for (var i = 0; i < r.data.gSelectedCategoryIds.length; i++) {
+                            arr.push(String(r.data.gSelectedCategoryIds[i]))
+                        }
+
+                        $('#GSelectedCategoryIds').val(arr)
+
+                        $('#images').html('')
+                        for (var i = 0; i < r.data.paths.length; i++) {
+                            $('#images').append($(`<img width="80" src=${r.data.paths[i]}>`))
+                        }
+
+                        //CategorySelect(r.data.categoriesModel,r.data.selectedCategoryIds)
+
+                        $('#updateModal').modal('show')
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+
+        })
+
+
+        $('#updateModal').on('click', '#btnUpdate', function () {
+
+            let files = $('#gProductMedias')[0].files;
+
+            // if (files.length != 0) {
+            //     alert("Lütfen en az bir dosya seçin!")
+            //     return;
+            // }
+
+            let formData = new FormData();
+
+            //formData.append("productDto", productDto);
+
+            formData.append('gProductName', $('#GProductName').val());
+            formData.append('gProductDescription', $('#GProductDescription').val());
+            formData.append('gPrice', $('#GPrice').val());
+            formData.append('gStock', $('#GStock').val());
+            formData.append('gId', $('#GId').val());
+
+
+            let categoryIds = $('#GSelectedCategoryIds').val();
+
+            for (var i = 0; i < categoryIds.length; i++) {
+                formData.append("gSelectedCategoryIds", categoryIds[i])
+            }
+
+            for (var i = 0; i < files.length; i++) {
+                formData.append("files", files[i])
+            }
+
+            $.ajax({
+                url: '/admin/Product/UpdateProduct',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.result) {
+
+                        var table = new DataTable('#tblProducts');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: data.message,
+                            icon: "success"
+                        }).then(() => {
+                            $('#updateModal').modal('hide')
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            title: "İşlem Başarısız",
+                            text: data.message,
+                            icon: "error"
+                        });
+                    }
+                }
+            })
+        })
+
+
+        $('#tblProducts').on('click', '.btnDelete', function () {
+            let productId = $(this).attr('pid');
+
+            $.ajax({
+                url: '/admin/Product/DeleteProduct',
+                dataType: 'json',
+                method: 'post',
+                data: { id: productId },
+                success: function (r) {
+                    if (r.result) {
+                        var table = new DataTable('#tblProducts');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: r.message,
+                            icon: "success"
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+
+        })
+
+        function CategorySelect(categories, selectedCategories) {
+
+            debugger
+            let categorySelect = $('#updateModal>#SelectedCategoryIds')
+
+            categories.forEach(function (category) {
+                var option = $('<option>', {
+                    value: category.id,
+                    text: category.categoryName
+                })
+
+
+                if (selectedCategories.indexOf(category.id) != -1) {
+                    option.prop('selected', true)
+
+                }
+
+                categorySelect.append(option);
+            })
+
+
+
+
+        }
+    </script>
+}

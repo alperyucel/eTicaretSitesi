@@ -1,0 +1,141 @@
+﻿@model List<FavoriteDTO>
+<main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title light-background">
+        <div class="container d-lg-flex justify-content-between align-items-center">
+            <h1 class="mb-2 mb-lg-0">Favorite</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current">Favorite</li>
+                </ol>
+            </nav>
+        </div>
+    </div><!-- End Page Title -->
+    <!-- Cart Section -->
+    <section id="cart" class="cart section">
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row g-4">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="cart-items">
+                        <div class="cart-header d-none d-lg-block">
+                            <div class="row align-items-center gy-4">
+                                <div class="col-lg-6">
+                                    <h5>Product</h5>
+                                </div>
+                                <div class="col-lg-2 text-center">
+                                    <h5>Price</h5>
+                                </div>                               
+                            </div>
+                        </div>
+
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <!-- Cart Item 1 -->
+                            <div class="cart-item" data-aos="fade-up" data-aos-delay="100">
+                                <div class="row align-items-center gy-4">
+                                    <div class="col-lg-6 col-12 mb-3 mb-lg-0">
+                                        <div class="product-info d-flex align-items-center">
+                                            <div class="product-image">
+                                                <a>
+                                                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@Model[i].ProductId">
+                                                        <img style="width:100px;" src="@Url.Content(Model[i].ImagePath)" alt="Product" class="img-fluid" loading="lazy">
+                                                    </a>
+                                            </div>
+                                            <div class="product-details">
+                                                <a>
+                                                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@Model[i].ProductId">
+                                                        <h6 class="product-title">@Model[i].ProductName</h6>
+                                                    </a>
+                                                    <div class="product-meta">
+                                                        <span class="product-color">Color: Black</span>
+                                                        <span class="product-size">Size: M</span>
+                                                    </div>
+                                                    <form asp-controller="Favorite" asp-action="DeleteFavorite" asp-route-id="@Model[i].Id" method="post" style="display:inline;">
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <i class="bi bi-trash"></i> Remove
+                                                        </button>
+                                                    </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-2 text-center">
+                                        <div class="price-tag">
+                                            <span class="current-price">$@Model[i].Price</span>
+                                        </div>
+                                    </div>                                                                                                        
+                                </div>
+                            </div>
+
+                            <!-- End Cart Item -->
+                        }
+
+                        @if (Model.Count <= 0)
+                        {
+                            <tr>
+                                <center><h3>FAVORİTE EMPTY :(</h3></center>
+                            </tr>
+                        }
+                    </div>
+                </div>
+
+                 
+            </div>
+
+        </div>
+
+    </section><!-- /Cart Section -->
+</main>
+
+@section Scripts {
+    <script>
+        // $('#cartQuantityUp').click(function () {
+
+        //     $('#cartItemQuantity').val(Number($('#cartItemQuantity').val()) + 1)
+
+        //     let productId = Number($('#productId').val())
+        //     let quantity = Number($('#cartItemQuantity').val())
+
+        //     $.ajax({
+        //         url: 'Cart/CartAdd',
+        //         type: 'POST',
+        //         data: { id: productId, quantity: quantity },
+        //         success: function (data) {
+        //             location.reload()
+
+        //         },
+        //         error: function (err) {
+        //             console.error(err)
+        //         }
+        //     })
+
+        // })
+
+        // $('#cartQuantityDown').click(function () {
+
+        //     $('#cartItemQuantity').val(Number($('#cartItemQuantity').val()) - 1)
+
+        //     let productId = Number($('#productId').val())
+        //     let quantity = Number($('#cartItemQuantity').val())
+
+        //     $.ajax({
+        //         url: 'Cart/CartAdd',
+        //         type: 'POST',
+        //         data: { id: productId, quantity: quantity },
+        //         success: function (data) {
+        //             location.reload()
+
+        //         },
+        //         error: function (err) {
+        //             console.error(err)
+        //         }
+        //     })
+
+        // })
+
+    </script>
+
+}

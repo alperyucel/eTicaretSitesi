@@ -1,0 +1,403 @@
+﻿@model MenuDTO
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Menus</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" asp-area="admin">Home</a></li>
+                    <li class="breadcrumb-item active">Menus</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#addModal">Add</button>
+                        <h3 style="display:inline;" class="card-title">DataTable with default features</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblMenus" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Title</th>
+                                    <th>Icon</th>
+                                    <th>Area</th>
+                                    <th>Controller</th>
+                                    <th>Action</th>
+                                    <th>Order No</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="quickForm">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input asp-for="Title" type="text" class="form-control" placeholder="Title">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Icon</label>
+                            <input asp-for="Icon" type="text" class="form-control" placeholder="Icon Class Name">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Area Name</label>
+                            <input asp-for="AreaName" type="text" class="form-control" placeholder="Area Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Controller Name</label>
+                            <input asp-for="ControllerName" type="text" class="form-control" placeholder="Controller Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Action Name</label>
+                            <input asp-for="ActionName" type="text" class="form-control" placeholder="Action Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Order Number</label>
+                            <input asp-for="OrderNumber" type="number" class="form-control" placeholder="Order Number">
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSave" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="updateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="quickForm">
+                    <div class="card-body">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input asp-for="GTitle" type="text" class="form-control" placeholder="Title">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Icon</label>
+                            <input asp-for="GIcon" type="text" class="form-control" placeholder="Icon Class Name">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Area Name</label>
+                            <input asp-for="GAreaName" type="text" class="form-control" placeholder="Area Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Controller Name</label>
+                            <input asp-for="GControllerName" type="text" class="form-control" placeholder="Controller Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Action Name</label>
+                            <input asp-for="GActionName" type="text" class="form-control" placeholder="Action Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Order Number</label>
+                            <input asp-for="GOrderNumber" type="number" class="form-control" placeholder="Order Number">
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnUpdate" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.print.min.js"></script>
+    <script>
+
+
+
+        $(function () {
+            $('#tblMenus').DataTable({
+                lengthMenu: [
+                    [5, 25, 50, -1],
+                    [5, 25, 50, 'All']
+                ],
+                dom: 'Bfrtip', // Butonlar ve diğer öğelerin sıralaması
+                buttons: [
+                    'copy',       // Kopyalama
+                    'excel',      // Excel'e dışa aktarma
+                    'pdf',        // PDF'ye dışa aktarma,
+                    'print',
+                    {
+                        extend: 'csv', // CSV'ye dışa aktarma
+                        text: 'CSV'     // Buton metni
+                    },
+                    'pageLength'
+                ],
+                ajax: {
+                    url: '/admin/Menu/GetMenus'
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'title' },
+                    { data: 'icon' },
+                    { data: 'areaName' },
+                    { data: 'controllerName' },
+                    { data: 'actionName' },
+                    { data: 'orderNumber' },
+                    { data: 'id' },
+                    { data: 'id' }
+
+
+                ],
+                columnDefs: [
+                    {
+                        targets: 2,
+                        render: function (data, type, row, meta) {
+                            return `<i class="${data}"></i>`
+                        }
+                    },
+                    {
+                        targets: 7,
+                        render: function (data, type, row, meta) {
+                            return `<a class="btn btn-warning btnUpdate" mid=${data}>Update</a>`
+                        }
+                    },
+                    {
+                        targets: 8,
+                        render: function (data, type, row, meta) {
+                            return `<a class="btn btn-danger btnDelete" mid=${data}>Delete</a>`
+                        }
+                    }
+                ],
+                pageLength: 5,
+                language: {
+                    //url: '//cdn.datatables.net/plug-ins/2.2.1/i18n/tr.json',
+                    url: '/adminassets/jsons/tr.json'
+                }
+
+
+            })
+        })
+
+        $('#btnSave').click(function () {
+
+
+            var menu = {
+                title: $('#Title').val(),
+                icon: $('#Icon').val(),
+                areaName: $('#AreaName').val(),
+                controllerName: $('#ControllerName').val(),
+                actionName: $('#ActionName').val(),
+                orderNumber: $('#OrderNumber').val(),
+
+            }
+
+            $.ajax({
+                url: '/admin/Menu/AddMenu',
+                dataType: 'json',
+                method: 'POST',
+                data: { model: menu },
+                success: function (data) {
+                    if (data.result) {
+
+                        var table = new DataTable('#tblMenus');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: data.message,
+                            icon: "success"
+                        }).then(() => {
+                            $('#addModal').modal('hide')
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            title: "İşlem Başarısız",
+                            text: data.message,
+                            icon: "error"
+                        });
+                    }
+                }
+            })
+        })
+
+        $('#tblMenus').on('click', '.btnUpdate', function () {
+            let menuId = $(this).attr('mid');
+
+            $.ajax({
+                url: '/admin/Menu/GetMenu',
+                dataType: 'json',
+                method: 'post',
+                data: { id: menuId },
+                success: function (r) {
+                    if (r.result) {
+
+                        $('#GTitle').val(r.data.title),
+                        $('#GIcon').val(r.data.icon),
+                        $('#GAreaName').val(r.data.areaName),
+                        $('#GControllerName').val(r.data.controllerName),
+                        $('#GActionName').val(r.data.actionName),
+                        $('#GOrderNumber').val(r.data.orderNumber),
+                        $('#Id').val(r.data.id)
+
+                        $('#updateModal').modal('show')
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+
+        })
+
+
+        $('#updateModal').on('click', '#btnUpdate', function () {
+
+            var menu = {
+                Id: $('#Id').val(),
+                title: $('#GTitle').val(),
+                icon: $('#GIcon').val(),
+                areaName: $('#GAreaName').val(),
+                controllerName: $('#GControllerName').val(),
+                actionName: $('#GActionName').val(),
+                orderNumber: $('#GOrderNumber').val(),
+
+            }
+
+            $.ajax({
+                url: '/admin/Menu/UpdateMenu',
+                dataType: 'json',
+                method: 'post',
+                data: { menu: menu },
+                success: function (data) {
+                    if (data.result) {
+
+                        var table = new DataTable('#tblMenus');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: data.message,
+                            icon: "success"
+                        }).then(() => {
+                            $('#updateModal').modal('hide')
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            title: "İşlem Başarısız",
+                            text: data.message,
+                            icon: "error"
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+
+
+        })
+
+
+
+        $('#tblMenus').on('click', '.btnDelete', function () {
+            let menuId = $(this).attr('mid');
+
+            $.ajax({
+                url: '/admin/Menu/DeleteMenu',
+                dataType: 'json',
+                method: 'post',
+                data: { id: menuId },
+                success: function (r) {
+                    if (r.result) {
+                        var table = new DataTable('#tblMenus');
+
+                        table.ajax.reload(null, false)
+
+                        Swal.fire({
+                            title: "İşlem Başarılı",
+                            text: r.message,
+                            icon: "success"
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            })
+
+        })
+    </script>
+}
